@@ -175,6 +175,10 @@ pub main | idx, last, button
         stop_animation
         term.otp(@RayNelson, @Mystery)
         pause(250)
+      %1010:
+        start_animation(@ProgBar, 0)
+        term.caesar(@Detective)
+        pause(250)
 
  
 pub setup
@@ -320,6 +324,23 @@ dat
               byte      %00010000, 125  
               byte      %00100000, 125    
   Cylon_X     byte      %01000000, 125
+
+  
+  ProgBar     byte      (@ProgBar_X - @ProgBar) / 2 + 1 
+              byte      %10000000, 125
+              byte      %11000000, 125
+              byte      %11100000, 125 
+              byte      %11110000, 125
+              byte      %11111000, 125  
+              byte      %11111100, 125  
+              byte      %11111110, 500 
+              byte      %11111111, 125
+              byte      %11111110, 125
+              byte      %11111100, 125
+              byte      %11111000, 125  
+              byte      %11110000, 125  
+              byte      %11100000, 125    
+  ProgBar_X   byte      %11000000, 125
 
                     
   Chaser      byte      (@Chaser_X - @Chaser) / 2 + 1      
