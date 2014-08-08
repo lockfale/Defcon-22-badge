@@ -177,9 +177,30 @@ pub main | idx, last, button
         pause(250)
         
       %1010:
-        start_animation(@ProgBar, 0)
-        term.caesar(@Detective)
-        pause(250)
+        repeat
+          button := read_pads
+          start_animation(@Pulse1, 0)
+          pause(250)  
+          start_animation(@Pulse2, 0)
+          pause(250)  
+          start_animation(@Pulse3, 0)
+          pause(250)  
+          start_animation(@Pulse4, 0)
+          pause(250)
+          start_animation(@Pulse5, 0)
+          pause(250)
+          start_animation(@Pulse4, 0)
+          pause(250)
+          start_animation(@Pulse3, 0)
+          pause(250)
+          start_animation(@Pulse2, 0)
+          pause(250)
+          start_animation(@Pulse1, 0)
+          pause(250)
+          start_animation(@Pulse0, 0)
+          pause(250)
+        until ((button <> %0000) and (button <> last))              ' must be new
+        last := button
 
  
 pub setup
@@ -369,6 +390,32 @@ dat
               byte      %00001111,  75
   Police_X    byte      %00110011,  75
           
+
+  Pulse1      byte      (@Pulse1_X - @Pulse1) / 2 + 1
+              byte      %10000001, 1
+  Pulse1_X    byte      %00000000, 20
+
+  
+  Pulse2      byte      (@Pulse2_X - @Pulse2) / 2 + 1
+              byte      %11000011, 1
+  Pulse2_X    byte      %10000001, 20
+
+  
+  Pulse3      byte      (@Pulse3_X - @Pulse3) / 2 + 1
+              byte      %11100111, 1
+  Pulse3_X    byte      %11000011, 20
+
+  
+  Pulse4      byte      (@Pulse4_X - @Pulse4) / 2 + 1
+              byte      %11111111, 1
+  Pulse4_X    byte      %11100111, 20
+
+  Pulse5      byte      (@Pulse5_X - @Pulse5) / 2 + 1
+  Pulse5_X    byte      %11111111, 100
+
+  Pulse0      byte      (@Pulse5_X - @Pulse5) / 2 + 1
+  Pulse0_X    byte      %00000000, 100  
+
   
 con   
 
