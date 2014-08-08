@@ -175,6 +175,7 @@ pub main | idx, last, button
         stop_animation
         term.otp(@RayNelson, @Mystery)
         pause(250)
+        
       %1010:
         start_animation(@ProgBar, 0)
         term.caesar(@Detective)
