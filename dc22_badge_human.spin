@@ -125,6 +125,11 @@ pub main | idx, last, button
   setup                                                         ' setup badge io and objects
 
   term.tx(CLS)                                                  ' clear the terminal
+  
+  irtx.start(IR_OUT, IR_FREQ)
+  
+  irrx.start(IR_IN)
+  ircog := cognew(recv, @irstack) + 1
 
   repeat until (read_pads <> %0000)                             ' wait for a pad press
     idx := (prng.random >> 1) // 13
@@ -153,21 +158,25 @@ pub main | idx, last, button
     case button
       %0001:
         start_animation(@Cylon, 0)                              ' start animation
+        send                                                    ' send goon code
         term.caesar(@Detective)                                 ' display crypto string
         pause(250)                                              ' allow clean button release
      
       %0101:
         start_animation(@Chaser, 0)
+        send
         term.otp(@Scientist, @Driver)
         pause(250)
       
       %0111:     
         start_animation(@Police, 0)
+        send
         term.caesar(@Diver)
         pause(250)
         
       %1000:   
         start_animation(@InOut, 0)
+        send
         term.otp(@Politician, @Football)
         pause(250)
       
@@ -178,6 +187,7 @@ pub main | idx, last, button
         
       %1010:
         repeat
+          send
           button := read_pads
           start_animation(@Pulse1, 0)
           pause(100)  
@@ -202,6 +212,16 @@ pub main | idx, last, button
         until ((button <> %0000) and (button <> last))              ' must be new
         last := button
 
+
+pub recv
+    repeat
+      irrx.start(IR_IN)
+      irrx.enable           
+      term.hex(irrx.rx, 255)
+      
+
+pub send
+    irtx.tx(56354, 20, 16)
  
 pub setup
 
@@ -278,6 +298,9 @@ var
 
   long  anicog                                                  ' cog running animation
   long  anistack[32]                                            ' stack space for Spin cog
+  long  ircog                                                   ' cog running animation
+  long  irstack[32]                                             ' stack space for Spin cog
+  long  handles
   
 
 pri start_animation(p_table, cycles)
