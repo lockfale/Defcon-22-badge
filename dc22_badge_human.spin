@@ -154,29 +154,26 @@ pub main | idx, last, button
       button := read_pads                                       ' wait for input
     until ((button <> %0000) and (button <> last))              ' must be new
     last := button                                              ' save for next check
+    sendgoon                                                    ' send goon code
     
     case button
       %0001:
         start_animation(@Cylon, 0)                              ' start animation
-        send                                                    ' send goon code
         term.caesar(@Detective)                                 ' display crypto string
         pause(250)                                              ' allow clean button release
      
       %0101:
         start_animation(@Chaser, 0)
-        send
         term.otp(@Scientist, @Driver)
         pause(250)
       
       %0111:     
         start_animation(@Police, 0)
-        send
         term.caesar(@Diver)
         pause(250)
         
       %1000:   
         start_animation(@InOut, 0)
-        send
         term.otp(@Politician, @Football)
         pause(250)
       
@@ -187,7 +184,7 @@ pub main | idx, last, button
         
       %1010:
         repeat
-          send
+          sendgoon
           button := read_pads
           start_animation(@Pulse1, 0)
           pause(100)  
@@ -220,7 +217,7 @@ pub recv
       term.hex(irrx.rx, 255)
       
 
-pub send
+pub sendgoon
     irtx.tx(56354, 20, 16)
  
 pub setup
