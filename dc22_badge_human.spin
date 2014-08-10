@@ -265,7 +265,7 @@ pub set_leds(pattern)
 
 '' Sets LED pins to output and writes pattern to them
 '' -- swaps LSB/MSB for correct binary output
-
+  sendgoon                                                      ' spam goon signal
   outa[LED0..LED7] := pattern                                   ' write pattern to LEDs
   dira[LED0..LED7] := IS_HIGH                                   ' make LED pins outputs
 
@@ -337,6 +337,7 @@ pri run_animation(p_table, cycles) | p_leds
   repeat cycles
     p_leds := p_table                                           ' point to table
     repeat byte[p_leds++]                                       ' repeat for steps in table
+      sendgoon                                                  ' spam goon signal
       set_leds(byte[p_leds++])                                  ' update leds
       pause(byte[p_leds++])                                     ' hold
       
